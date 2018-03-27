@@ -1,0 +1,151 @@
+use_bpm 120
+use_synth :piano
+i=0
+x=0
+y= :bd_tek
+z= 14
+sponge = [:d5, :e5, :d5, :b,:g,:b,:d5,:e5,:d5] # an array is a list of values     #names of all notes and song used in this file-->
+bob = [:g5, :fs5, :g5, :e5, :d5, :e5, :d5, :b, :g, :b]
+ariana = "C:/Users/liliana_gutierrez/One Last Time"
+#melody starts
+define :spongebob do
+  sample y ,amp: 1                        #uses the drum_bass_soft and plays it adding x (1) each time
+  sleep 2
+  sample y , amp: 1
+  sleep 2
+  x = x + 1
+end
+define :sound do
+  sample ariana                #plays the song chosen in the file
+  sleep 60
+end
+
+define :drumbeat do
+  sample y, amp: 2           #uses the drum_bass_soft
+  sleep 2
+  sample y, amp: 2
+  sleep 2
+  x = x + 1
+end
+
+define :strategytwo do
+  # assign a value to 'b' that will be used as the index value
+  b = rand_i (10)              #uses the notes in bob and randomizes it playing each note in the range given
+  print b
+  play bob[b], amp: 0.5
+  sleep 0.5
+end
+
+define :squarepants do
+  with_fx :reverb do
+    1.times do
+      play :eb, sustain: 3.5, amp: 2                  #playing one note and streching it out
+      sleep 3.5
+      play :d
+      sleep 0.5
+    end
+    #below are the melodies that is playing
+    1.times do
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :e5, amp: 2
+      sleep 0.33333333333333333
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :b, amp: 2
+      sleep 0.33333333333333333
+      play :g, amp: 2
+      sleep 0.33333333333333333
+      play :b, amp: 2
+      sleep 0.33333333333333333
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :e5, amp: 2
+      sleep 0.33333333333333333
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :b, amp: 2
+      sleep 1
+    end
+    
+    1.times do
+      play :g5, amp: 2
+      sleep 0.33333333333333333
+      play :fs5, amp: 2
+      sleep 0.33333333333333333
+      play :g5, amp: 2
+      sleep 0.33333333333333333
+      play :e5, amp: 2
+      sleep 0.33333333333333333
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :e5, amp: 2
+      sleep 0.33333333333333333
+      play :d5, amp: 2
+      sleep 0.33333333333333333
+      play :b, amp: 2
+      sleep 0.33333333333333333
+      play :g, amp: 2
+      sleep 0.33333333333333333
+      play :b, amp: 2
+      sleep 0.5
+      play :g5, amp: 2
+      sleep 0.5
+    end
+  end
+end
+#end of melody
+play :eb, sustain: 3.5
+sleep 3.5
+play :d
+sleep 0.5
+#end of melody
+
+9.times do
+  play sponge[i]                    #uses the notes in sponge and randomizes it playing each note in the range given
+  sleep 0.333333
+  i = i+1
+end
+play :b
+sleep 1
+i=0                 #resetting variable i back to 0
+
+10.times do
+  play bob[i]
+  sleep 0.333333
+  i = i+1
+end
+play:b
+sleep 0.5
+play:g5
+sleep 0.5
+
+
+
+#melody ends
+
+#melody with drums starts
+live_loop :squarepants do
+  sponge
+  sleep 1
+end
+#all of these live loops are playing the define functions that are above and calling them to play
+
+live_loop :spongebob do
+  spongebob
+  sync:squarepants
+end
+
+live_loop :drum do
+  drumbeat
+end
+
+live_loop :strategytwo do
+  strategytwo
+  sync:squarepants
+end
+
+live_loop :ariana do
+  sound
+  sync:squarepants
+end
