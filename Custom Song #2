@@ -1,0 +1,74 @@
+use_bpm 120
+use_synth :piano
+journey = "C:/Users/liliana_gutierrez/Journey_-_Dont_Stop_Believin_Audio[Mp3Converter.net].wav"
+x= [2,4,1,3,5]
+
+define :first do
+  4.times do
+    play:bs4
+    play:e4, amp: choose(x)   #random chooses of the amps that are in the variable
+    sleep 0.5
+    play:bs3
+    sleep 0.5
+  end
+end
+define :second do
+  4.times do
+    play:bs4, amp: choose(x)                #random chooses of the amps that are in the variable
+    play:fs4
+    sleep 0.5
+    play:bs3, amp: choose(x)                 #random chooses of the amps that are in the variable
+    sleep 0.5
+  end
+end
+define :third do
+  play:e1, sustain: 2.5
+  sleep 2.5
+  play :e1, amp: choose(x)                      #random chooses of the amps that are in the variable
+  sleep 0.5
+  play :f1
+  sleep 0.5
+  play :g1, amp: choose(x)                      #random chooses of the amps that are in the variable
+  sleep 0.5
+  play :b1, sustain: 3
+  sleep 3 
+  play :c2, amp: choose(x)                         #random chooses of the amps that are in the variable
+  sleep 0.5
+  play :d2
+  sleep 0.5
+  play :c2, sustain: 3, amp: choose(x)                        #random chooses of the amps that are in the variable
+  sleep 3
+  play :d2
+  sleep 0.5
+  play :e2, amp: choose(x)                             #random chooses of the amps that are in the variable
+  sleep 0.5
+  play :a1, sustain: 3
+  sleep 3
+  play :d2, amp: choose(x)                             #random chooses of the amps that are in the variable
+  sleep 0.5
+  play :e2
+  sleep 0.5
+  play :e1, amp: choose(x)                           #random chooses of the amps that are in the variable
+  sleep 0.5
+end
+define :sound do
+  sample journey, amp:3                                #define function with amp of 3
+  sleep 1
+end
+
+
+
+live_loop :song do                                  #plays song one time while notes are playing at the same time and different amps
+  1.times do
+    sound
+    sleep 45
+  end
+  stop
+end
+live_loop :piano do
+  6.times do
+    first
+    second
+  end
+  stop
+end
